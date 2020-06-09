@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <meta charset="utf-8"/>
+    <title>修改</title>
+    <link href="../css/base.css" rel="stylesheet"/>
+    <link href="../layui/css/layui.css" rel="stylesheet"/>
+    <link href="../css/detailBook.css" rel="stylesheet"/>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../layui/layui.all.js"></script>
+    <script src="../js/myutil.js"></script>
+
+    <script>
+        var userName = getCookie("userName");
+        $(function(){
+
+            $("#applyuser").html(userName);
+
+            //自动填入一些信息
+            // $.ajax({
+            //     url:'../../leaderinvite',
+            //     type:'get',
+            //     data:{id:bid},
+            //     dataType:'json',
+            //     success:function(data){
+            //         console.log(data);
+            //         console.log(data.cname);
+            //         console.log(data.mobile);
+            //         console.log(data.qq);
+            //         $("#cname").val(data.cname);
+            //         $("#mobile").val(data.mobile);
+            //         $("#qq").val(data.qq);
+            //         $("#email").val(data.email);
+            //         $("#address").val(data.address);
+            //     }
+            // })
+
+            /*$("#creationTime").val(getLocalTimes(new Date().getTime()));*/
+
+            // $("#btnBack").on("click",function(){
+            // });
+            //
+            // $("#btnCreate").on("click",function(){
+            //
+            // })
+        });
+
+
+        function back(){
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            parent.layer.close(index);
+        }
+
+        function add(){
+            var param = {};
+            param.groupid = $("#groupid").val().trim();;
+            param.checkstatus=$("#checkstatus").val().trim();
+            param.applyuser=$("#applyuser").val().trim();
+            param.applyreason=$("#applyreason").val().trim();
+
+
+            $.ajax({
+                url:"../../userapply",
+                type:'post',
+                data:param,
+                dataType:'json',
+                success:function(result){
+                    alert(JSON.stringify(result));
+                    layer.msg(result.data);
+                    setTimeout(function(){
+                        window.parent.location.reload();//刷新父页面
+                        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                        parent.layer.close(index);
+                    },500);
+                },
+                error:function () {
+                    alert("错误");
+                }
+            })
+        }
+    </script>
+
+</head>
+<body>
+<div class="pw">
+    <h1>
+        申请加入
+    </h1>
+    <div class="container">
+        <table border = "0" class ="">
+            <tbody>
+            <tr>
+                <td>groupid：</td>
+                <td><input type="text" id = "groupid" ></td>
+                <td>checkstatus：</td>
+                <td><input type="text" id = "checkstatus" value="unchecked"></td>
+            </tr>
+            <tr>
+                <td>applyuser：</td>
+                <td><input type="text" id = "applyuser" ></td>
+                <td>applyreason：</td>
+                <td><input type="text" id = "applyreason"></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="4">
+                    <input type="button" value ="申请" id = "btnCreate" onclick='javascript:add()'>
+                    <input type="button" value ="返回" id = "btnBack" onclick='javascript:back()'>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+
+    </div>
+</div>
+</body>
+</html>

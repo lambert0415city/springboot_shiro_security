@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kgc.hz.testprovider.dao.GroupDao">
+
+
+    <resultMap id="groupMap" type="Groupinfo">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="typeid" column="typeid"/>
+        <result property="picimg" column="picimg"/>
+        <result property="description" column="description"/>
+        <result property="creatorid" column="creatorid"/>
+        <result property="createtime" column="createtime"/>
+        <result property="modifytime" column="modifytime"/>
+        <result property="status" column="status"/>
+        <result property="requirecheck" column="requirecheck"/>
+
+        <association property="user">
+            <result property="id" column="userid"/>
+            <result property="realname" column="realname"/>
+        </association>
+
+        <association property="groupmember">
+            <result property="memberid" column="memberid"/>
+        </association>
+
+        <association property="role">
+            <result property="name" column="rolename"/>
+        </association>
+    </resultMap>
+    <!--    获取客户信息表时，-->
+    <select id="getAllGroups" resultMap="groupMap">
+        select g.*,u.id as userid,u.realname,m.memberid,r.name as rolename
+        from groupinfo g left join groupmember m on m.groupid = g.id
+        left join users u on m.memberid = u.id
+        left join role r on r.id = m.roleid
+    </select>
+
+    <select id="getSelfGroups" resultMap="groupMap" >
+        select g.*,u.id as userid,u.realname,m.memberid,r.name as rolename
+        from groupinfo g left join groupmember m on m.groupid = g.id
+        left join users u on m.memberid = u.id
+        left join role r on r.id = m.roleid
+        where m.memberid=#{id} or creatorid = #{id} or status =0
+    </select>
+
+    <!--1别人加入我的组 需要操作-->
+    <select id="getOthersApply" resultType="Userapply">
+select ua.*, u.id as userid, ru.roleid from userapply ua left join users u on ua.applyuser = u.username
+left join role_user ru on ru.userId = u.id
+where groupid in (select id from groupinfo where creatorid = #{id})
+    </select>
+
+    <!--    2别人邀请我加入	需要操作		-->
+    <select id="getOthersInvite" resultType="Userinvite">
+        select ui.*,u.id as userid, ru.roleid from userinvite ui
+        left join users u on ui.invitee = u.username
+        left join role_user ru on ru.userId = u.id
+        where invitee = #{invitee}
+    </select>
+
+    <!--    3我想加入别人-->
+    <select id="getMyApply" resultType="Userapply">
+        select * from userapply where applyuser = #{applyuser}
+    </select>
+
+    <!--    4我邀请别人加入-->
+    <select id="getMyInvite" resultType="Userinvite">
+       select * from userinvite where inviter = #{inviter}
+    </select>
+
+    <!--  创建群组-->
+    <insert id="addGroup" parameterType="Groupinfo">
+        <trim prefix="insert into groupinfo(" suffix=")" suffixOverrides="," >
+            <if test = "name != null and name != ''">
+                name,
+            </if>
+            <if test = "creatorid != null and creatorid != ''">
+                creatorid,
+            </if>
+            <if test = "status != null and status != ''">
+                status,
+            </if>
+            <if test = "requirecheck != null and requirecheck != ''">
+                requirecheck,
+            </if>
+        </trim>
+
+        <trim prefix="values(" suffix=")" suffixOverrides="," >
+            <if test = "name != null and name != ''">
+                #{name},
+            </if>
+            <if test = "creatorid != null and creatorid != ''">
+                #{creatorid},
+            </if>
+            <if test = "status != null and status != ''">
+                #{status},
+            </if>
+            <if test = "requirecheck != null and requirecheck != ''">
+                #{requirecheck},
+            </if>
+        </trim>
+    </insert>
+
+<!--    添加组员-->
+    <insert id="addMember" parameterType="Groupmember">
+        <trim prefix="insert into groupmember(" suffix=")" suffixOverrides="," >
+            <if test = "groupid != null and groupid != ''">
+                groupid,
+            </if>
+            <if test = "memberid != null and memberid != ''">
+                memberid,
+            </if>
+            <if test = "roleid != null and roleid != ''">
+                roleid,
+            </if>
+            createtime,
+        </trim>
+
+        <trim prefix="values(" suffix=")" suffixOverrides="," >
+            <if test = "groupid != null and groupid != ''">
+                #{groupid},
+            </if>
+            <if test = "memberid != null and memberid != ''">
+                #{memberid},
+            </if>
+            <if test = "roleid != null and roleid != ''">
+                #{roleid},
+            </if>
+            now(),
+        </trim>
+    </insert>
+
+    <!-- 1用户申请加入-->
+    <insert id="addApply" parameterType="Userapply">
+        <trim prefix="insert into userapply(" suffix=")" suffixOverrides="," >
+            <if test = "groupid != null and groupid != ''">
+                groupid,
+            </if>
+            <if test = "applyuser != null and applyuser != ''">
+                applyuser,
+            </if>
+            <if test = "checkstatus != null and checkstatus != ''">
+                checkstatus,
+            </if>
+            <if test = "applyreason != null and applyreason != ''">
+                applyreason,
+            </if>
+            applytime,
+        </trim>
+
+        <trim prefix="values(" suffix=")" suffixOverrides="," >
+            <if test = "groupid != null and groupid != ''">
+                #{groupid},
+            </if>
+            <if test = "applyuser != null and applyuser != ''">
+                #{applyuser},
+            </if>
+            <if test = "checkstatus != null and checkstatus != ''">
+                #{checkstatus},
+            </if>
+            <if test = "applyreason != null and applyreason != ''">
+                #{applyreason},
+            </if>
+            now(),
+        </trim>
+    </insert>
+
+    <!-- 3群主邀请加入-->
+    <insert id="addInvite" parameterType="Userinvite">
+        <trim prefix="insert into userinvite(" suffix=")" suffixOverrides="," >
+            <if test = "groupid != null and groupid != ''">
+                groupid,
+            </if>
+            <if test = "inviter != null and inviter != ''">
+                inviter,
+            </if>
+            <if test = "invitee != null and invitee != ''">
+                invitee,
+            </if>
+            <if test = "invitereason != null and invitereason != ''">
+                invitereason,
+            </if>
+            <if test = "feedbackstatus != null and feedbackstatus != ''">
+                feedbackstatus,
+            </if>
+            invitetime,
+        </trim>
+
+        <trim prefix="values(" suffix=")" suffixOverrides="," >
+            <if test = "groupid != null and groupid != ''">
+                #{groupid},
+            </if>
+            <if test = "inviter != null and inviter != ''">
+                #{inviter},
+            </if>
+            <if test = "invitee != null and invitee != ''">
+                #{invitee},
+            </if>
+            <if test = "invitereason != null and invitereason != ''">
+                #{invitereason},
+            </if>
+            <if test = "feedbackstatus != null and feedbackstatus != ''">
+                #{feedbackstatus},
+            </if>
+            now(),
+        </trim>
+    </insert>
+
+<!--    2群主同意加入-->
+    <update id="updateApply" parameterType="Userapply">
+        update userapply
+        <set>
+            <if test = "checkstatus != null and checkstatus != ''">
+                checkstatus=#{checkstatus},
+            </if>
+            <if test = "checkinfo != null and checkinfo != ''">
+                checkinfo=#{checkinfo},
+            </if>
+
+            <if test = "checkuser != null and checkuser != ''">
+                checkuser=#{checkuser},
+            </if>
+            checktime=now(),
+        </set>
+        where id =#{id}
+    </update>
+
+    <!--    4用户同意加入-->
+    <update id="updateInvite" parameterType="Userinvite">
+        update userinvite
+        <set>
+            <if test = "feedbackinfo != null and feedbackinfo != ''">
+                feedbackinfo=#{feedbackinfo},
+            </if>
+            <if test = "feedbackstatus != null and feedbackstatus != ''">
+                feedbackstatus=#{feedbackstatus},
+            </if>
+            feedbacktime=now(),
+        </set>
+        where id =#{id}
+    </update>
+
+<!--    更新组-->
+    <update id="updateGroup" parameterType="Groupinfo">
+        update groupinfo
+        <set>
+            <if test = "name != null and name != ''">
+                name=#{name},
+            </if>
+            <if test = "creatorid != null and creatorid != ''">
+                creatorid=#{creatorid},
+            </if>
+            <if test = "status != null and status != ''">
+                status=#{status},
+            </if>
+            <if test = "requirecheck != null and requirecheck != ''">
+                requirecheck=#{requirecheck},
+            </if>
+        </set>
+        where id =#{id}
+    </update>
+
+    <select id="getGroupById" resultType="Groupinfo">
+        select g.*,u.id as userid,u.realname,m.memberid,r.name as rolename
+        from groupinfo g left join groupmember m on m.groupid = g.id
+        left join users u on m.memberid = u.id
+        left join role r on r.id = m.roleid
+        where g.id=#{id}
+    </select>
+
+
+    <delete id="deleteOne">
+        delete from groupinfo where id=#{id}
+    </delete>
+
+    <delete id="deleteList" parameterType="map">
+        delete from groupinfo where id in
+        <if test="ids.length!=0">
+            <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+    </delete>
+
+    <update id="falsedelete">
+        update groupinfo set status=0 where id=#{id}
+    </update>
+
+</mapper>

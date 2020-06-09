@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <meta charset="utf-8"/>
+    <title>修改</title>
+    <link href="../css/base.css" rel="stylesheet"/>
+    <link href="../layui/css/layui.css" rel="stylesheet"/>
+    <link href="../css/detailBook.css" rel="stylesheet"/>
+    <script src="../js/jquery-1.12.4.min.js"></script>
+    <script src="../layui/layui.all.js"></script>
+    <script src="../js/myutil.js"></script>
+
+    <script>
+        $(function(){
+        });
+
+        function add() {
+            var bid = getUrlParam("bid");
+            var param = {};
+            param.id = bid;
+            param.name = $("#name").val().trim();
+            param.creatorid=$("#creatorid").val().trim();
+            param.status=$('input:radio[name="status"]:checked').val();
+            param.requirecheck=$('input:radio[name="requirecheck"]:checked').val();
+
+            $.ajax({
+                url:"../../updategroup",
+                type:'post',
+                data:param,
+                dataType:'json',
+                success:function(result){
+                    alert(JSON.stringify(result));
+                    layer.msg(result.data);
+                    setTimeout(function(){
+                        window.parent.location.reload();//刷新父页面
+                        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                        parent.layer.close(index);
+                    },500);
+                },
+                error:function () {
+                    alert("错误");
+                }
+            })
+        }
+
+        function back() {
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            parent.layer.close(index);
+        }
+    </script>
+
+</head>
+<body>
+<div class="pw">
+    <h1>
+        创建群组
+    </h1>
+    <div class="container">
+        <table border = "0" class ="">
+            <tbody>
+            <tr>
+                <td>name：</td>
+                <td><input type="text" id = "name" ></td>
+                <td>creatorid：</td>
+                <td><input type="text" id = "creatorid"></td>
+            </tr>
+            <tr>
+                <td>status：</td>
+                <td><input name="status" type="radio" value="0" checked >公有
+                    <input name="status" type="radio" value="1" >私有
+                </td>
+                <td>requirecheck：</td>
+                <td><input name="requirecheck" type="radio" value="0" checked >不需要
+                    <input name="requirecheck" type="radio" value="1" >需要
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="4">
+                    <input type="button" value ="创建" id = "btnCreate"  onclick='javascript:add()'>
+                    <input type="button" value ="返回" id = "btnBack"onclick='javascript:back()'>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+
+    </div>
+</div>
+</body>
+</html>

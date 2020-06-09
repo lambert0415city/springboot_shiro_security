@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="js/cookie.js"></script>
+    <script type="text/javascript" src="js/creategroup.js"></script>
+
+    <script src="layui/layui.all.js"></script>
+    <script src="js/myutil.js"></script>
+
+    <script src="js/stomp.js"></script>
+
+    <link href="css/base.css" rel="stylesheet"/>
+    <link href="layui/css/layui.css" rel="stylesheet"/>
+    <link href="css/index.css" rel="stylesheet"/>
+
+    <script type="text/javascript">
+
+        var token = getCookie("token");
+        var userName = getCookie("userName");
+
+        $(function(){
+            $("#name").html(userName);
+            selfgroups();
+            checkmessages();
+        });
+
+
+        //产看消息
+        function checkmessages() {
+
+            var url = "ws://localhost:61614/stomp";
+            var login = "admin";
+            var passcode = "admin";
+            //监听的队列
+            //需要和发送者的发送的队列名称一致否则无法接受到数据
+            destination = "addapply";
+            client = Stomp.client(url);
+            var onconnect = function(frame) {
+                client.subscribe(destination, function(message) {
+                    console.log(message.body);
+                    alert("您有新的消息");
+                    alert(message.body);
+                    // alert(JSON.stringify(message.body));
+                    alert(message.body.groupid);
+                });
+            };
+            client.connect(login, passcode, onconnect);
+
+        }
+
+
+        function logout(){
+            if(token!=null && token!=""){
+                $.ajax({
+                    url:"../logOut",
+                    type:"get",
+                    data:"token="+token,
+                    success:function(result){
+                        // alert(result);
+                        if(result==true){
+                            location.href="login.html";
+                        }
+                    }
+                });
+            }
+        }
+
+        function selfgroups() {
+            if(token!=null && token!=""){
+                $.ajax({
+                    url:"../selfgroups",
+                    type:"get",
+                    data:"token="+token,
+                    dataType:"json",
+                    success:function(result){
+                        if(result==null){
+                            alert("没有查到用户token");
+                            // location.href="login.html";
+                        }else{
+                            // alert(JSON.stringify(result));
+                            // alert(JSON.stringify(result.data));
+                            $("#tableBody").html("");
+                            $(result.data).each(function (index,item) {
+                                $("#tableBody").append("<tr><td>"+(index+1)+"</td>" +
+                                    "<td>"+item.id+"</td>" +
+                                    "<td><button onclick='javascript:change("+item.id+")' class='layui-btn layui-btn-xs layui-bg-red' bid="+item.id+">"+item.name+"</button></td>" +
+                                    "<td>"+item.creatorid+"</td>" +
+                                    "<td>"+item.createtime+"</td>" +
+                                    "<td>"+item.user.id+"</td>" +
+                                    "<td>"+item.user.realname+"</td>" +
+                                    "<td>"+item.groupmember.memberid+"</td>" +
+                                    "<td>"+item.role.name+"</td>" +
+                                    "<td>"+item.status+"</td>" +
+                                    "<td>"+item.requirecheck+"</td>" +
+                                    "<td><button onclick='javascript:change("+item.id+")' class='layui-btn layui-btn-xs layui-bg-cyan' bid="+item.id+">转让群主</button>" +
+                                    "<button onclick='javascript:del("+item.id+")' class='layui-btn layui-btn-xs layui-bg-cyan' bid="+item.id+">删除</button>" +
+                                    "</td></tr>")
+                            })
+
+                        }
+                    }
+                });
+            }else{
+                alert("没有查到用户token，请重新登录");
+                location.href="login.html";
+            }
+        }
+
+        function allgroups(){
+            $.ajax({
+                url:"../allgroups",
+                type:"get",
+                dataType:"json",
+                success:function(result){
+                    if(result==null){
+                        alert("没有查到用户token");
+                        // location.href="login.html";
+                    }else{
+                        // alert(JSON.stringify(result));
+
+                        $("#tableBody2").html("");
+                        $(result.data).each(function (index,item) {
+                            $("#tableBody").append("<tr><td>"+(index+1)+"</td>" +
+                                "<td>"+item.id+"</td>" +
+                                "<td><button onclick='javascript:change("+item.id+")' class='layui-btn layui-btn-xs layui-bg-red' bid="+item.id+">"+item.name+"</button></td>" +
+                                "<td>"+item.creatorid+"</td>" +
+                                "<td>"+item.createtime+"</td>" +
+                                "<td>"+item.user.id+"</td>" +
+                                "<td>"+item.user.realname+"</td>" +
+                                "<td>"+item.groupmember.memberid+"</td>" +
+                                "<td>"+item.role.name+"</td>" +
+                                "<td>"+item.status+"</td>" +
+                                "<td>"+item.requirecheck+"</td>" +
+                                "<td><button onclick='javascript:change("+item.id+")' class='layui-btn layui-btn-xs layui-bg-cyan' bid="+item.id+">转让群主</button>" +
+                                "<button onclick='javascript:del("+item.id+")' class='layui-btn layui-btn-xs layui-bg-cyan' bid="+item.id+">删除</button>" +
+                                "</td></tr>")
+                        })
+                    }
+                },
+                error:function () {
+                    alert("当前用户没有权限");
+                }
+            });
+        }
+
+        //1查看别人申请加入的消息
+        function getothersapply(){
+            $.ajax({
+                url:"../getothersapply",
+                type:"get",
+                data:"token="+token,
+                dataType:"json",
+                success:function(result){
+                    if(result.data.length ==0 ){
+                        alert("没有查询到任何消息");
+                    }
+                    // alert(JSON.stringify(result));
+                    $("#tableBody3").html("");
+                    $(result.data).each(function (index,item) {
+                        $("#tableBody3").append("<tr><td>"+(index+1)+"</td>" +
+                            "<td>"+item.id+"</td>" +
+                            "<td>"+item.groupid+"</td>" +
+                            "<td>"+item.roleid+"</td>" +
+                            "<td>"+item.userid+"</td>" +
+                            "<td>"+item.applyreason+"</td>" +
+                            "<td>"+item.applytime+"</td>" +
+                            "<td>"+item.applyuser+"</td>" +
+                            "<td>"+item.checkstatus+"</td>" +
+                            "<td><button onclick='javascript:leaderagree(\""+userName+"\","+item.id+","+item.groupid+","+item.userid+","+item.roleid+")' class='layui-btn layui-btn-xs layui-bg-green' bid="+item.id+">同意</button>" +
+                            "<button onclick='javascript:leaderrefuse(\""+userName+"\","+item.id+")' class='layui-btn layui-btn-xs layui-bg-gray' bid="+item.id+">拒绝</button>" +
+                            "</td></tr>")
+                    })
+                },
+                error:function () {
+                    alert("查询消息错误");
+                }
+            });
+        }
+
+        //2群主同意
+        function leaderagree(user,id,groupid,userid,roleid){
+            var param={};
+            param.id=id;
+            param.checkstatus = "success";
+            param.checkinfo = "ok";
+            param.checkuser = user;
+            param.groupid = groupid;
+            param.userid = userid;
+            param.roleid = roleid;
+            $.ajax({
+                url:"../leaderagree",
+                type:"post",
+                data:param,
+                dataType:"json",
+                success:function(result){
+                    if(result.flag ==4 ){
+                        alert("已同意用户申请，添加组员成功");
+                    }
+                },
+                error:function () {
+                    alert("错误");
+                }
+            });
+        }
+
+        //2.1群主拒绝
+        function leaderrefuse(user,id){
+            var param={};
+            param.id=id;
+            param.checkstatus = "false";
+            param.checkinfo = "false";
+            param.checkuser = user;
+            $.ajax({
+                url:"../leaderagree",
+                type:"post",
+                data:param,
+                dataType:"json",
+                success:function(result){
+
+                    if(result.flag ==5 ){
+                        alert("您已拒绝用户申请,拒绝消息已添加到库存");
+                    }
+                },
+                error:function () {
+                    alert("错误");
+                }
+            });
+        }
+
+        //2查看别人邀请我的消息
+        function getothersinvite(){
+            $.ajax({
+                url:"../getothersinvite",
+                type:"get",
+                data:"token="+token,
+                dataType:"json",
+                success:function(result){
+                    if(result.data.length ==0 ){
+                        alert("没有查询到任何消息");
+                    }
+                    // alert(JSON.stringify(result));
+                    $("#tableBody4").html("");
+                    $(result.data).each(function (index,item) {
+                        $("#tableBody4").append("<tr><td>"+(index+1)+"</td>" +
+                            "<td>"+item.id+"</td>" +
+                            "<td>"+item.groupid+"</td>" +
+                            "<td>"+item.roleid+"</td>" +
+                            "<td>"+item.userid+"</td>" +
+                            "<td>"+item.inviter+"</td>" +
+                            "<td>"+item.invitee+"</td>" +
+                            "<td>"+item.invitereason+"</td>" +
+                            "<td>"+item.feedbackinfo+"</td>" +
+                            "<td>"+item.feedbackstatus+"</td>" +
+                            "<td>"+item.invitetime+"</td>" +
+                            "<td>"+item.feedbacktime+"</td>" +
+                            "<td><button onclick='javascript:useragree("+item.id+","+item.groupid+","+item.userid+","+item.roleid+")' class='layui-btn layui-btn-xs layui-bg-green' bid="+item.id+">同意</button>" +
+                            "<button onclick='javascript:userrefuse("+item.id+")' class='layui-btn layui-btn-xs layui-bg-gray' bid="+item.id+">拒绝</button>" +
+                            "</td></tr>")
+                    })
+                },
+                error:function () {
+                    alert("查询消息错误");
+                }
+            });
+        }
+
+
+        //4.1用户同意
+        function useragree(id,groupid,userid,roleid){
+            var param={};
+            param.id=id;
+            param.feedbackstatus = "true";
+            param.feedbackinfo = "true";
+            param.groupid = groupid;
+            param.userid = userid;
+            param.roleid = roleid;
+            $.ajax({
+                url:"../useragree",
+                type:"post",
+                data:param,
+                dataType:"json",
+                success:function(result){
+                    if(result.flag ==4 ){
+                        alert("您已同意群主邀请，入群成功");
+                    }
+                },
+                error:function () {
+                    alert("错误");
+                }
+            });
+            getothersinvite();
+        }
+
+        //4.2用户拒绝
+        function userrefuse(id){
+            var param={};
+            param.id=id;
+            param.feedbackstatus = "false";
+            param.feedbackinfo = "false";
+            $.ajax({
+                url:"../useragree",
+                type:"post",
+                data:param,
+                dataType:"json",
+                success:function(result){
+                    if(result.flag ==5 ){
+                        alert("您已拒绝用户申请,拒绝消息已添加到库存");
+                    }
+                },
+                error:function () {
+                    alert("错误");
+                }
+            });
+            getothersinvite();
+        }
+
+    </script>
+</head>
+<body>
+    <div>
+        <div class="login">
+            <span id="name" ></span>用户，欢迎您！<a href="javascript:logout()" style="color: red">退出登录</a>
+        </div>
+
+        <a href="javascript:checkmessages()" style="color: coral">检测消息addapply：</a>
+
+        <div class="searchMain">
+            <span>查找群组：（模糊查询）</span>
+            <input type="text" class="layui-form-label" placeholder="请输入要搜索的名字" id="inputSearch">
+
+            <input type="button" class="layui-btn layui-btn-primary layui-btn-sm" value="查询" id="btnQuery">
+        </div>
+
+<!--        添加群组，邀请加入，申请加入-->
+        <div class="operator">
+            <button type="button" class="layui-btn layui-btn-sm" id="newgroup">
+                <i class="layui-icon">&#xe608;</i> 添加群组
+            </button>
+
+            <button type="button" class="layui-btn layui-btn-sm layui-bg-green" id="newapply">
+                <i class="layui-icon">&#xe607;</i> 申请加入
+            </button>
+
+            <button type="button" class="layui-btn layui-btn-sm" id="newinvite">
+                <i class="layui-icon">&#xe606;</i> 邀请组员
+            </button>
+
+        </div>
+
+        <a href="javascript:selfgroups()" style="color: coral">您所在的分组为：</a>
+        <a href="javascript:allgroups()" style="color: coral">查询全部组信息</a>
+        <div class="tableList">
+            <table border='1' cellspacing="0" class="layui-table" lay-even="" lay-skin="row">
+
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>编号ID</th>
+                    <th>名字</th>
+                    <th>创建者</th>
+                    <th>创建时间</th>
+                    <th>userid</th>
+                    <th>realname</th>
+                    <th>memeberid</th>
+                    <th>角色</th>
+                    <th>status</th>
+                    <th>requirecheck</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+
+                <tbody id="tableBody">
+
+                </tbody>
+            </table>
+
+            <div class="pages">
+                第<span id="curPage"></span>/<span id="pageCount"></span>页
+                <a href="javascript:firstPage();" class="layui-btn layui-btn-normal layui-btn-radius">首页</a>
+                <a href="javascript:prevPage();" class="layui-btn layui-btn-normal layui-btn-radius">上一页</a>
+                <a href="javascript:nextPage();" class="layui-btn layui-btn-normal layui-btn-radius">下一页</a>
+                <a href="javascript:lastPage();" class="layui-btn layui-btn-normal layui-btn-radius">末页</a>
+                <span class="jump">到第</span>
+                <input type="text" class="layui-form-label" id="pageGoNum"><span class="jump">页</span>
+                <input type="button" class="layui-btn layui-bg-green layui-btn-danger layui-btn-sm " id="btnGo" value="GO">
+            </div>
+
+        </div>
+
+
+        <!--全部信息-->
+
+<!--        <div class="tableList2">-->
+<!--            <table border='1' cellspacing="0" class="layui-table" lay-even="" lay-skin="row">-->
+
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th>序号</th>-->
+<!--                    <th>编号ID</th>-->
+<!--                    <th>名字</th>-->
+<!--                    <th>创建者</th>-->
+<!--                    <th>创建时间</th>-->
+<!--                    <th>userid</th>-->
+<!--                    <th>realname</th>-->
+<!--                    <th>memeberid</th>-->
+<!--                    <th>角色</th>-->
+<!--                    <th>status</th>-->
+<!--                    <th>requirecheck</th>-->
+<!--                    <th>操作</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+
+<!--                <tbody id="tableBody2">-->
+
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+
+        <!--1查看别人申请加入的消息-->
+        <a href="javascript:getothersapply()" style="color: red">1查看别人申请加入的消息</a>
+        <div class="tableList3">
+            <table border='1' cellspacing="0" class="layui-table" lay-even="" lay-skin="row">
+
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>id</th>
+                    <th>groupid</th>
+                    <th>roleid</th>
+                    <th>userid</th>
+                    <th>applyreason</th>
+                    <th>applytime</th>
+                    <th>applyuser</th>
+                    <th>checkstatus</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+
+                <tbody id="tableBody3">
+
+                </tbody>
+            </table>
+        </div>
+
+        <!--2查看别人邀请我的消息-->
+        <a href="javascript:getothersinvite()" style="color: red">2查看别人邀请我的消息</a>
+        <div class="tableList4">
+            <table border='1' cellspacing="0" class="layui-table" lay-even="" lay-skin="row">
+
+                <thead>
+
+                <tr>
+                    <th>序号</th>
+                    <th>id</th>
+                    <th>groupid</th>
+                    <th>roleid</th>
+                    <th>userid</th>
+                    <th>inviter</th>
+                    <th>invitee</th>
+                    <th>invitereason</th>
+                    <th>feedbackinfo</th>
+                    <th>feedbackstatus</th>
+                    <th>invitetime</th>
+                    <th>feedbacktime</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+
+                <tbody id="tableBody4">
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+</body>
+</html>

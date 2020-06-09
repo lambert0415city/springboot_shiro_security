@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kgc.hz.testprovider.dao.UserInfoDao">
+
+    <select id="getUser" parameterType="Users" resultType="Users">
+        select u.id,u.username,u.password,u.realname,r.name from users u
+        left join role_user ru on u.id = ru.userId
+        left join role r on r.id = ru.roleId
+        where username=#{username}
+    </select>
+
+</mapper>

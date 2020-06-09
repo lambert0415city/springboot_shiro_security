@@ -1,0 +1,32 @@
+.pw{
+    width:800px;
+    margin:0 auto;
+}
+h1{
+    text-align: center;
+    font-size:30px;
+    margin:30px 0;
+}
+.container{
+    width:800px;
+}
+.container>table{
+    line-height:24px;
+
+}
+table{
+    margin:0 auto;
+}
+table>tbody>tr{
+    line-height:28px;
+}
+table>tbody>tr>td:nth-child(even){
+    width:240px;
+}
+table>tfoot>tr>td{
+    text-align: center;
+}
+table>tfoot>tr>td>input{
+    width:100px;
+    margin-top:15px;
+}

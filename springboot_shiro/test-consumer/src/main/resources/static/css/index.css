@@ -1,0 +1,65 @@
+.pw{
+    width:1000px;
+    margin:30px auto;
+}
+.pw h1{
+    text-align: center;
+    font-size:30px;
+}
+.searchMain{
+    font-size:16px;
+    text-align: center;
+    margin:15px 0;
+}
+.operator{
+    margin:15px 0;
+}
+.tableList{
+    font-size:14px;
+}
+.tableList table{}
+.layui-form-label{
+    display:inline-block;
+    float:none;
+    border-radius:5px;
+    width:180px;
+    padding:3px 6px;
+    line-height:25px;
+    text-align: left;
+    border:1px solid #bbb;
+}
+.pages{
+    text-align:right;
+}
+.pages>.layui-form-label{
+    width:40px;
+    text-align: center;
+    line-height:24px;
+    height:24px;
+    font-size:12px;
+    padding:0 5px;
+}
+.layui-btn{
+    font-size:16px;
+    margin-left:10px;
+}
+.pages>.layui-btn{
+    font-size:12px;
+    text-align: center;
+    margin:0 3px;
+    line-height:24px;
+    height:24px;
+}
+.layui-table tr th,.layui-table tr td{
+    line-height:28px;
+    padding:0;
+    text-align: center;
+}
+#tableBody tr{
+    line-height:28px;
+    padding:0;
+    height:28px;
+}
+#tableBody>tr>td a{
+    margin-right:4px;
+}
