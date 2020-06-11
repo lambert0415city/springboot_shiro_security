@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yue.dao.EmployeeMapper">
+
+
+    <resultMap id="EmployeeDepart" type="Employee">
+        <association property="department" column="department" javaType="com.yue.pojo.Department" select="getDepartment"/>
+    </resultMap>
+
+    <select id="getDepartment" resultType="com.yue.pojo.Department">
+        select * from department where id = #{id}
+    </select>
+
+    <insert id="save">
+        insert into employee(id, lastName, email, gender, birth, department) value (#{id},#{lastName},#{email},#{gender},#{birth},#{department.id});
+    </insert>
+
+    <select id="getAll" resultMap="EmployeeDepart">
+        select * from employee
+    </select>
+
+    <select id="getEmployeeById" parameterType="int" resultMap="EmployeeDepart">
+        select * from employee where id = #{id}
+    </select>
+
+    <delete id="delete" parameterType="int">
+        delete from employee where id = #{id}
+    </delete>
+
+</mapper>
