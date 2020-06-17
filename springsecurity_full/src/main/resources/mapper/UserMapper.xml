@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cs.dao.UserDao">
+
+    <resultMap id="userRoleMap" type="UserDTO">
+        <id property="uid" column="uid"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <collection property="roles" ofType="RoleDTO">
+            <id property="rid" column="rid"/>
+            <result property="role" column="role"></result>
+        </collection>
+    </resultMap>
+
+
+    <select id="selectUserByUsername" resultMap="userRoleMap">
+        select user2.uid, user2.username, user2.password, role2.rid, role2.role
+        from user2, user2_role2, role2
+        where user2.username=#{username}
+        and user2.uid = user2_role2.uid
+        and user2_role2.rid = role2.rid
+    </select>
+</mapper>
