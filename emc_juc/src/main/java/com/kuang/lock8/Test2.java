@@ -47,6 +47,7 @@ class Phone2{
     }
 
     // 这里没有锁！不是同步方法，不受锁的影响
+
     public void hello(){
         System.out.println("hello");
     }
