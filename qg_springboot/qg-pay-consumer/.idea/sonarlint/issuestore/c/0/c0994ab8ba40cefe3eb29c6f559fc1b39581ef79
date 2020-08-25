@@ -1,0 +1,12 @@
+
+csquid:S00112f"FDefine and throw a dedicated exception instead of using a generic one.(çƒÒüÿÿÿÿ
+Tsquid:UselessImportCheck"0Remove this unused import 'com.qg.pojo.QgGoods'.(¹·é²
+Ysquid:UselessImportCheck"0Remove this unused import 'com.qg.pojo.QgOrder'.(ÚŞè§ûÿÿÿÿ
+Ysquid:UselessImportCheck"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ
+{squid:S1149g"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(ì­ŠÜúÿÿÿÿ
+[squid:UselessImportCheck"7Remove this unused import 'com.github.wxpay.sdk.WXPay'.(»úşÌ
+psquid:S2293:"YReplace the type specification in this constructor call with the diamond operator ("<>").(™µè©
+nsquid:S00117L"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨Ê±úÿÿÿÿ
+dsquid:S11928"HDefine a constant instead of duplicating this literal "SUCCESS" 3 times.(ÁäåÀüÿÿÿÿ
+?squid:S1148\"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+isquid:S00117M"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ñë˜Æ

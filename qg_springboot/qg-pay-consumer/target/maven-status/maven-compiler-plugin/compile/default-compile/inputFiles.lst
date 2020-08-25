@@ -1,0 +1,8 @@
+D:\workspace\qg\qg-pay-consumer\src\main\java\com\qg\service\LocalPayService.java
+D:\workspace\qg\qg-pay-consumer\src\main\java\com\qg\config\AlipayConfig.java
+D:\workspace\qg\qg-pay-consumer\src\main\java\com\qg\service\impl\LocalPayServiceImpl.java
+D:\workspace\qg\qg-pay-consumer\src\main\java\com\qg\controller\WxPayController.java
+D:\workspace\qg\qg-pay-consumer\src\main\java\com\qg\QgPayConsumerApplication.java
+D:\workspace\qg\qg-pay-consumer\src\main\java\com\qg\config\QgWxPayConfig.java
+D:\workspace\qg\qg-pay-consumer\src\main\java\com\qg\controller\AliPayController.java
+D:\workspace\qg\qg-pay-consumer\src\main\java\com\qg\exception\PayException.java

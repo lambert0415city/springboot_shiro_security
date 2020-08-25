@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/../qg-goods-consumer/pom.xml" />
+        <option value="$PROJECT_DIR$/../qg-goods-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../qg-order-consumer/pom.xml" />
+        <option value="$PROJECT_DIR$/../qg-order-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../qg-pay-consumer/pom.xml" />
+        <option value="$PROJECT_DIR$/../qg-pay-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../qg-pre/pom.xml" />
+        <option value="$PROJECT_DIR$/../qg-user-consumer/pom.xml" />
+        <option value="$PROJECT_DIR$/../qg-user-provider/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

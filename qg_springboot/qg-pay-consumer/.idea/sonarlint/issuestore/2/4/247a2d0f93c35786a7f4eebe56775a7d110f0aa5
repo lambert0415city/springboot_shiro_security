@@ -1,0 +1,9 @@
+
+gsquid:CommentedOutCodeLines"<This block of commented-out lines of code should be removed.(žô¿Ìùÿÿÿÿ
+psquid:S2293d"YReplace the type specification in this constructor call with the diamond operator ("<>").(¶÷§ˆ
+Gsquid:S1905I"+Remove this unnecessary cast to "String[]".(÷ûŠ®ùÿÿÿÿ
+psquid:S2293m"YReplace the type specification in this constructor call with the diamond operator ("<>").(øóŒö
+@squid:S1905H")Remove this unnecessary cast to "String".(¹õ˜˜
+Isquid:S1313u"2Make this IP "123.12.12.123" address configurable.(ÄÕ’¬
+vsquid:S2293˜"YReplace the type specification in this constructor call with the diamond operator ("<>").(Çß±Åÿÿÿÿÿ
+usquid:S2293F"YReplace the type specification in this constructor call with the diamond operator ("<>").(ô›Óíüÿÿÿÿ

@@ -1,0 +1,8 @@
+com\qg\QgUserConsumerApplication.class
+com\qg\service\impl\LocalUserServiceImpl.class
+com\qg\config\WxConfig.class
+com\qg\exception\UserException.class
+com\qg\controller\TestUserController.class
+com\qg\controller\UserController.class
+com\qg\controller\WxController.class
+com\qg\service\LocalUserService.class

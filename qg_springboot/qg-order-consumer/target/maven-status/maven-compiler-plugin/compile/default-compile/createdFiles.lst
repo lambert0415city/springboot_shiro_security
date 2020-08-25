@@ -1,0 +1,5 @@
+com\qg\service\impl\LocalOderServiceImpl.class
+com\qg\service\LocalOderService.class
+com\qg\controller\OrderController.class
+com\qg\QgOrderConsumerApplication.class
+com\qg\exception\OrderException.class

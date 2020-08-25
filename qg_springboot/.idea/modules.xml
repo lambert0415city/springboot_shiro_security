@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/1.项目源码.iml" filepath="$PROJECT_DIR$/.idea/1.项目源码.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qg-common-parent/qg-common-dto/qg-common-dto.iml" filepath="$PROJECT_DIR$/qg-common-parent/qg-common-dto/qg-common-dto.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qg-common-parent/qg-common-module/qg-common-module.iml" filepath="$PROJECT_DIR$/qg-common-parent/qg-common-module/qg-common-module.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qg-common-parent/qg-common-parent.iml" filepath="$PROJECT_DIR$/qg-common-parent/qg-common-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qg-common-parent/qg-common-service/qg-common-service.iml" filepath="$PROJECT_DIR$/qg-common-parent/qg-common-service/qg-common-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qg-common-parent/qg-common-utils/qg-common-utils.iml" filepath="$PROJECT_DIR$/qg-common-parent/qg-common-utils/qg-common-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qg-goods-consumer/qg-goods-consumer.iml" filepath="$PROJECT_DIR$/qg-goods-consumer/qg-goods-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qg-goods-provider/qg-goods-provider.iml" filepath="$PROJECT_DIR$/qg-goods-provider/qg-goods-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qg-order-consumer/qg-order-consumer.iml" filepath="$PROJECT_DIR$/qg-order-consumer/qg-order-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qg-order-provider/qg-order-provider.iml" filepath="$PROJECT_DIR$/qg-order-provider/qg-order-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qg-pay-consumer/qg-pay-consumer.iml" filepath="$PROJECT_DIR$/qg-pay-consumer/qg-pay-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qg-pay-provider/qg-pay-provider.iml" filepath="$PROJECT_DIR$/qg-pay-provider/qg-pay-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qg-pre/qg-pre.iml" filepath="$PROJECT_DIR$/qg-pre/qg-pre.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qg-user-consumer/qg-user-consumer.iml" filepath="$PROJECT_DIR$/qg-user-consumer/qg-user-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qg-user-provider/qg-user-provider.iml" filepath="$PROJECT_DIR$/qg-user-provider/qg-user-provider.iml" />
+    </modules>
+  </component>
+</project>

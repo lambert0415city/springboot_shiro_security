@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="qg-pay-provider" />
+        <module name="qg-common-utils" />
+        <module name="qg-common-service" />
+        <module name="qg-pre" />
+        <module name="qg-goods-provider" />
+        <module name="qg-user-consumer" />
+        <module name="qg-common-module" />
+        <module name="qg-pay-consumer" />
+        <module name="qg-common-dto" />
+        <module name="qg-order-provider" />
+        <module name="qg-user-provider" />
+        <module name="qg-goods-consumer" />
+        <module name="qg-order-consumer" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="qg-common-dto" target="1.7" />
+      <module name="qg-common-module" target="1.7" />
+      <module name="qg-common-parent" target="1.7" />
+      <module name="qg-common-service" target="1.7" />
+      <module name="qg-common-utils" target="1.7" />
+      <module name="qg-goods-consumer" target="1.8" />
+      <module name="qg-goods-provider" target="1.8" />
+      <module name="qg-order-consumer" target="1.8" />
+      <module name="qg-order-provider" target="1.8" />
+      <module name="qg-pay-consumer" target="1.8" />
+      <module name="qg-pay-provider" target="1.8" />
+      <module name="qg-pre" target="1.8" />
+      <module name="qg-user-consumer" target="1.8" />
+      <module name="qg-user-provider" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="qg-pre" options="-parameters" />
+    </option>
+  </component>
+</project>

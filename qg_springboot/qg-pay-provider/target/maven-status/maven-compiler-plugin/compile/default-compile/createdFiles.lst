@@ -1,0 +1,3 @@
+com\qg\QgPayProviderApplication.class
+com\qg\mapper\QgTradeMapper.class
+com\qg\service\impl\QgTradeServiceImpl.class

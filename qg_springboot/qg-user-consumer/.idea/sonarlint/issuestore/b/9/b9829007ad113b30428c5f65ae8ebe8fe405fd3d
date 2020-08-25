@@ -1,0 +1,12 @@
+
+Xsquid:UselessImportCheck"4Remove this unused import 'com.qg.common.Constants'.(ÏÒ°æ
+Osquid:UselessImportCheck"+Remove this unused import 'java.util.Date'.(¸…¼ü
+Wsquid:UselessImportCheck".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ
+zsquid:UselessImportCheck"QRemove this unused import 'org.springframework.web.bind.annotation.ResponseBody'.(•¶¶êøÿÿÿÿ
+Rsquid:UselessImportCheck"/Remove this unused import 'com.qg.pojo.QgUser'.(“þÙ
+ssquid:UselessImportCheck"JRemove this unused import 'com.alibaba.dubbo.config.annotation.Reference'.(”Ì‡Œúÿÿÿÿ
+Tsquid:UselessImportCheck"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ
+`squid:UselessImportCheck"7Remove this unused import 'javax.jws.soap.SOAPBinding'.(î¶âÑûÿÿÿÿ
+asquid:UselessImportCheck"8Remove this unused import 'org.omg.CORBA.PUBLIC_MEMBER'.(œŠÆÊÿÿÿÿÿ
+Ssquid:UselessImportCheck"*Remove this unused import 'java.util.Map'.(¼è½Òþÿÿÿÿ
+]squid:UselessImportCheck	"9Remove this unused import 'com.qg.service.QgUserService'.(‚±ë¡

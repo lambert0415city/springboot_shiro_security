@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.qg:qg-common-utils:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/qg/qg-common-utils/1.0-SNAPSHOT/qg-common-utils-1.0-20190117.131814-91.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/qg/qg-common-utils/1.0-SNAPSHOT/qg-common-utils-1.0-20190117.131814-91-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/qg/qg-common-utils/1.0-SNAPSHOT/qg-common-utils-1.0-20190117.131814-91-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

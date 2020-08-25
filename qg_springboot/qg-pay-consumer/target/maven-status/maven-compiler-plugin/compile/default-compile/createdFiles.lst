@@ -1,0 +1,9 @@
+com\qg\controller\AliPayController.class
+com\qg\controller\WxPayController.class
+com\qg\service\LocalPayService.class
+com\qg\config\AlipayConfig.class
+com\qg\exception\PayException.class
+com\qg\config\QgWxPayConfig.class
+com\qg\QgPayConsumerApplication.class
+com\qg\config\QgWxPayConfig$1.class
+com\qg\service\impl\LocalPayServiceImpl.class
